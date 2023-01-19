@@ -72,15 +72,50 @@ public class GestorArboles {
 					
 					break;
 				case ELIMINAR_ARBOL:
-					System.out.println("segunda opcion seleccionada\n");
+					System.out.println("Eliminando un arbol...");
 					System.out.println("Introducel la id del arbol a eliminar");
+					int idEliminar= scan.nextInt();
+					st.execute("DELETE FROM arboles WHERE id = '"+ idEliminar +"'");
 					
 					break;
 				case MODIFICAR:
-					System.out.println("tercera opcion seleccionada\n");
+					System.out.println("Modicifanco arbol...");
+					System.out.println("introduce la id del arbol a modificar :");
+					int idModificar = scan.nextInt();
+					
+					System.out.println("introduce nombre nuevo");
+					String nombreN = scan.nextLine();
+					st.execute("UPDATE arboles SET nombre_comun ='"+ nombreN+"' WHERE id='"+ idModificar+"'");
+					
+					System.out.println("introduce nombre cientifico nuevo");
+					String nombreC = scan.nextLine();
+					st.execute("UPDATE arboles SET nombre_cientifico ='"+ nombreC+"' WHERE id='"+ idModificar+"'");
+					
+					System.out.println("introduce habitat nuevo");
+					String habitatN = scan.nextLine();
+					st.execute("UPDATE arboles SET nombre_cientifico ='"+ habitatN+"' WHERE id='"+ idModificar+"'");
+					
+					System.out.println("introduce altura");
+					String alturaN = scan.nextLine();
+					st.execute("UPDATE arboles SET nombre_cientifico ='"+ alturaN+"' WHERE id='"+ idModificar+"'");
+					
+					
+					System.out.println("introduce origen nuevo");
+					String origenN = scan.nextLine();
+					st.execute("UPDATE arboles SET nombre_cientifico ='"+ origenN+"' WHERE id='"+ idModificar+"'");
+					
+					
+					
+					
 					break;
 				case VISUALIZAR:
 					System.out.println("cuarta opcion seleccionada\n");
+					
+					String sentenciaSelect = "SELECT *FROM arboles";
+					ResultSet resultado = st.executeQuery(sentenciaSelect);
+					while(resultado.next()) {
+						System.out.println(resultado.getInt(1)+"  -  "+resultado.getString(2));
+					}
 					break;
 				case SALIR:
 					System.out.println("ADIOS");
