@@ -128,10 +128,10 @@ public class GestorArboles {
 			scan.close();
 
 			String sentenciaSelect = "SELECT *FROM arbol";
-			ResultSet resultado = st.executeQuery(sentenciaSelect);
+			/*ResultSet resultado = st.executeQuery(sentenciaSelect);
 			while (resultado.next()) {
 				System.out.println(resultado.getInt(1) + "  -  " + resultado.getString(2));
-			}
+			}*/
 
 		} catch (SQLException e) {
 			e.printStackTrace();
