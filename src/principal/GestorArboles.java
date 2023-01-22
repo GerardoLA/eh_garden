@@ -35,10 +35,10 @@ public class GestorArboles {
 
 			do {
 				System.out.println("------MENU-------");
-				System.out.println(INSERTAR_ARBOL + ". primera opcion");
-				System.out.println(ELIMINAR_ARBOL + ". segunda opcion");
-				System.out.println(MODIFICAR + ". tercera opcion");
-				System.out.println(VISUALIZAR + ". cuarta opcion");
+				System.out.println(INSERTAR_ARBOL + ".INSERTAR_ARBOL primera opcion");
+				System.out.println(ELIMINAR_ARBOL + ".ELIMINAR_ARBOL segunda opcion");
+				System.out.println(MODIFICAR + ".MODIFICAR tercera opcion");
+				System.out.println(VISUALIZAR + ". VISUALIZAR cuarta opcion");
 				System.out.println(SALIR + ". AGUR");
 				System.out.println("Elije una de las opciones");
 				opcion_menu = Integer.parseInt(scan.nextLine());
@@ -48,29 +48,33 @@ public class GestorArboles {
 					System.out.println("insertando arbol...");
 					System.out.println("introduce el nombre");
 					String nombreComun = scan.nextLine();
-					st.execute("INSERT INTO arboles (nombre_comun) VALUES ('" + nombreComun+ "')");
+					
 					
 					System.out.println("introduce el nombre cientifico");
 					String nombreCientifico = scan.nextLine();
-					st.execute("INSERT INTO arboles (nombre_cientifico) VALUES ('" + nombreCientifico+ "')");
+				
 					
 					
 					System.out.println("introduce el habitat");
 					String habitat = scan.nextLine();
-					st.execute("INSERT INTO arboles (habitat) VALUES ('" + habitat+ "')");
+				
 					
 
-					System.out.println("introduce la altur");
-					 int altura = scan.nextInt();
-					st.execute("INSERT INTO arboles (altura) VALUES ('" + altura+ "')");
+					System.out.println("introduce la altura, numero entero");
+					 int altura = Integer.parseInt(scan.nextLine());
+					
 					
 					
 
 					System.out.println("introduce el origen");
 					String origen = scan.nextLine();
-					st.execute("INSERT INTO arboles (origen) VALUES ('" + origen+ "')");
+					st.execute("INSERT INTO arboles (nombre_comun, nombre_cientifico, habitat, altura, origen) "
+							+ "VALUES('"+nombreComun+"',"+" '"+nombreCientifico+"',"+"'"+habitat+"',"+" '"+altura+"',"+" '"+origen+"')");
 					
-					break;
+					System.out.println("Yes!! Árbol introducido correctamente"); 
+					
+					
+					break; 
 				case ELIMINAR_ARBOL:
 					System.out.println("Eliminando un arbol...");
 					System.out.println("Introducel la id del arbol a eliminar");
@@ -81,7 +85,7 @@ public class GestorArboles {
 				case MODIFICAR:
 					System.out.println("Modicifanco arbol...");
 					System.out.println("introduce la id del arbol a modificar :");
-					int idModificar = scan.nextInt();
+					int idModificar = Integer.parseInt(scan.nextLine());
 					
 					System.out.println("introduce nombre nuevo");
 					String nombreN = scan.nextLine();
@@ -93,19 +97,19 @@ public class GestorArboles {
 					
 					System.out.println("introduce habitat nuevo");
 					String habitatN = scan.nextLine();
-					st.execute("UPDATE arboles SET nombre_cientifico ='"+ habitatN+"' WHERE id='"+ idModificar+"'");
+					st.execute("UPDATE arboles SET habitat ='"+ habitatN+"' WHERE id='"+ idModificar+"'");
 					
 					System.out.println("introduce altura");
 					String alturaN = scan.nextLine();
-					st.execute("UPDATE arboles SET nombre_cientifico ='"+ alturaN+"' WHERE id='"+ idModificar+"'");
+					st.execute("UPDATE arboles SET altura ='"+ alturaN+"' WHERE id='"+ idModificar+"'");
 					
 					
 					System.out.println("introduce origen nuevo");
 					String origenN = scan.nextLine();
-					st.execute("UPDATE arboles SET nombre_cientifico ='"+ origenN+"' WHERE id='"+ idModificar+"'");
+					st.execute("UPDATE arboles SET origen ='"+ origenN+"' WHERE id='"+ idModificar+"'");
 					
 					
-					
+					System.out.println("modificado ok!");
 					
 					break;
 				case VISUALIZAR:
