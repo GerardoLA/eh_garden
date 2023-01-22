@@ -44,30 +44,26 @@ public class GestorArboles {
 				opcion_menu = Integer.parseInt(scan.nextLine());
 
 				switch (opcion_menu) {
+				
 				case INSERTAR_ARBOL:
-					System.out.println("insertando arbol...");
-					System.out.println("introduce el nombre");
-					String nombreComun = scan.nextLine();
 					
+					System.out.println("insertando arbol...");
+					
+					System.out.println("introduce el nombre");
+					String nombreComun = scan.nextLine();	
 					
 					System.out.println("introduce el nombre cientifico");
 					String nombreCientifico = scan.nextLine();
 				
-					
-					
 					System.out.println("introduce el habitat");
 					String habitat = scan.nextLine();
 				
-					
-
 					System.out.println("introduce la altura, numero entero");
 					 int altura = Integer.parseInt(scan.nextLine());
 					
-					
-					
-
 					System.out.println("introduce el origen");
 					String origen = scan.nextLine();
+					
 					st.execute("INSERT INTO arboles (nombre_comun, nombre_cientifico, habitat, altura, origen) "
 							+ "VALUES('"+nombreComun+"',"+" '"+nombreCientifico+"',"+"'"+habitat+"',"+" '"+altura+"',"+" '"+origen+"')");
 					
@@ -78,7 +74,7 @@ public class GestorArboles {
 				case ELIMINAR_ARBOL:
 					System.out.println("Eliminando un arbol...");
 					System.out.println("Introducel la id del arbol a eliminar");
-					int idEliminar= scan.nextInt();
+					int idEliminar= Integer.parseInt(scan.nextLine());
 					st.execute("DELETE FROM arboles WHERE id = '"+ idEliminar +"'");
 					
 					break;
