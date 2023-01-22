@@ -2,6 +2,7 @@ package principal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,14 +18,20 @@ public class GestorArboles {
 		Scanner scan = new Scanner(System.in);
 
 		// INSERT INTO tablaprueba (nombre) VALUES ('gato')
+		
+		
 
 		try {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/eh_garden", "root", "");
 
-			Statement st = con.createStatement();
-
+			PreparedStatement pst = con.prepareStatement("INSERT INTO arboles VALUES (null,?,?,?,?,?)");
+			
+			PreparedStatement pstElim = con.prepareStatement("DELETE FROM arboles WHERE nombre_comun=?");
+			
+			PreparedStatement pstModif = con.prepareStatement("UPDATE arboles set (?,?,?,?,?) WHERE nombre_comun=nombrearbol");
+				
 			final int INSERTAR_ARBOL = 1;
 			final int ELIMINAR_ARBOL = 2;
 			final int MODIFICAR = 3;
@@ -52,21 +59,30 @@ public class GestorArboles {
 					
 					System.out.println("introduce el nombre");
 					String nombreComun = scan.nextLine();	
+					pst.setString(1, nombreComun);
 					
 					System.out.println("introduce el nombre cientifico");
 					String nombreCientifico = scan.nextLine();
+					pst.setString(2, nombreCientifico);
+					
 				
 					System.out.println("introduce el habitat");
 					String habitat = scan.nextLine();
+					pst.setString(3, habitat);
 				
 					System.out.println("introduce la altura, numero entero");
 					 int altura = Integer.parseInt(scan.nextLine());
+					 pst.setInt(4,altura);
+					 
 					
 					System.out.println("introduce el origen");
 					String origen = scan.nextLine();
+					pst.setString(5, origen);
 					
-					st.execute("INSERT INTO arboles (nombre_comun, nombre_cientifico, habitat, altura, origen) "
-							+ "VALUES('"+nombreComun+"',"+" '"+nombreCientifico+"',"+"'"+habitat+"',"+" '"+altura+"',"+" '"+origen+"')");
+					
+					pst.executeUpdate();
+					//pst.execute("INSERT INTO arboles (nombre_comun, nombre_cientifico, habitat, altura, origen) "
+						//	+ "VALUES("+nombreComun+","+" "+nombreCientifico+","+""+habitat+","+" "+altura+","+" "+origen+")");
 					
 					System.out.println("Yes!! Árbol introducido correctamente"); 
 					
@@ -74,37 +90,44 @@ public class GestorArboles {
 					break; 
 				case ELIMINAR_ARBOL:
 					System.out.println("Eliminando un arbol...");
-					System.out.println("Introducel la id del arbol a eliminar");
-					int idEliminar= Integer.parseInt(scan.nextLine());
-					st.execute("DELETE FROM arboles WHERE id = '"+ idEliminar +"'");
+					System.out.println("Introduce el nombre del arbol a eliminar");
+					String nombreEliminar= scan.nextLine();
+					pstElim.setString(1, nombreEliminar);
+					pstElim.executeUpdate();
+					System.out.println(nombreEliminar + "eliminado");
 					
 					break;
 				case MODIFICAR:
 					System.out.println("Modicifanco arbol...");
-					System.out.println("introduce la id del arbol a modificar :");
-					int idModificar = Integer.parseInt(scan.nextLine());
+					System.out.println("introduce el nombre del arbol a modificar :");
+					String nombrearbol = scan.nextLine();
+					pstModif.setString(1, nombrearbol);
+					
 					
 					System.out.println("introduce nombre nuevo");
 					String nombreN = scan.nextLine();
-					st.execute("UPDATE arboles SET nombre_comun ='"+ nombreN+"' WHERE id='"+ idModificar+"'");
-					
+					//pstModif.execute("UPDATE arboles SET nombre_comun ='"+ nombreN+"' WHERE id='"+ idModificar+"'");
+					pstModif.setString(1,nombreN);
 					System.out.println("introduce nombre cientifico nuevo");
 					String nombreC = scan.nextLine();
-					st.execute("UPDATE arboles SET nombre_cientifico ='"+ nombreC+"' WHERE id='"+ idModificar+"'");
+					//pstModif.execute("UPDATE arboles SET nombre_cientifico ='"+ nombreC+"' WHERE id='"+ idModificar+"'");
+					pstModif.setString(2,nombreC);
 					
 					System.out.println("introduce habitat nuevo");
 					String habitatN = scan.nextLine();
-					st.execute("UPDATE arboles SET habitat ='"+ habitatN+"' WHERE id='"+ idModificar+"'");
-					
+					//pstModif.execute("UPDATE arboles SET habitat ='"+ habitatN+"' WHERE id='"+ idModificar+"'");
+					pstModif.setString(3,habitatN);
 					System.out.println("introduce altura");
-					String alturaN = scan.nextLine();
-					st.execute("UPDATE arboles SET altura ='"+ alturaN+"' WHERE id='"+ idModificar+"'");
-					
+					int alturaN = Integer.parseInt(scan.nextLine());
+					//pstModif.execute("UPDATE arboles SET altura ='"+ alturaN+"' WHERE id='"+ idModificar+"'");
+					pstModif.setInt(4,alturaN);
 					
 					System.out.println("introduce origen nuevo");
 					String origenN = scan.nextLine();
-					st.execute("UPDATE arboles SET origen ='"+ origenN+"' WHERE id='"+ idModificar+"'");
+					//pst.execute("UPDATE arboles SET origen ='"+ origenN+"' WHERE id='"+ idModificar+"'");
+					pstModif.setString(5,origenN);
 					
+					pstModif.execute();
 					
 					System.out.println("modificado ok!");
 					
@@ -113,7 +136,7 @@ public class GestorArboles {
 					System.out.println("cuarta opcion seleccionada\n");
 					
 					String sentenciaSelect = "SELECT *FROM arboles";
-					ResultSet resultado = st.executeQuery(sentenciaSelect);
+					ResultSet resultado = pst.executeQuery(sentenciaSelect);
 					while(resultado.next()) {
 						System.out.println(resultado.getInt(1)+"  -  "+resultado.getString(2));
 					}
