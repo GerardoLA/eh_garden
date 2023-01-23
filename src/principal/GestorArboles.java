@@ -30,7 +30,7 @@ public class GestorArboles {
 			
 			PreparedStatement pstElim = con.prepareStatement("DELETE FROM arboles WHERE nombre_comun=?");
 			
-			PreparedStatement pstModif = con.prepareStatement("UPDATE arboles set atributo=(?) WHERE nombre_comun=nombrearbol");
+			;
 				//"UPDATE arboles SET ID=10 WHERE ID=1"
 			final int INSERTAR_ARBOL = 1;
 			final int ELIMINAR_ARBOL = 2;
@@ -100,35 +100,52 @@ public class GestorArboles {
 					break;
 				case MODIFICAR:
 					System.out.println("Modicifando arbol...");
-					System.out.println("introduce el nombre del arbol a modificar :");
-					String nombrearbol = scan.nextLine();
-					pstModif.setString(1, nombrearbol);
+					System.out.println("introduce id del arbol a modificar :");
+					int idmod = Integer.parseInt(scan.nextLine());
 					
 					
+					PreparedStatement pstModif = con.prepareStatement("UPDATE arboles set nombre_comun=(?) WHERE id=?");
 					System.out.println("introduce nombre nuevo");
 					String nombreN = scan.nextLine();
+					
 					//pstModif.execute("UPDATE arboles SET nombre_comun ='"+ nombreN+"' WHERE id='"+ idModificar+"'");
 					pstModif.setString(1,nombreN);
+					pstModif.setInt(2, idmod);
+					pstModif.executeUpdate();
+					
+					PreparedStatement pstModif2 = con.prepareStatement("UPDATE arboles set nombre_cientifico=(?) WHERE id=?");
 					System.out.println("introduce nombre cientifico nuevo");
 					String nombreC = scan.nextLine();
 					//pstModif.execute("UPDATE arboles SET nombre_cientifico ='"+ nombreC+"' WHERE id='"+ idModificar+"'");
-					pstModif.setString(2,nombreC);
+					pstModif2.setString(1,nombreC);
+					pstModif2.setInt(2, idmod);
+					pstModif2.executeUpdate();
 					
+					PreparedStatement pstModif3 = con.prepareStatement("UPDATE arboles set habitat=(?) WHERE id=?");
 					System.out.println("introduce habitat nuevo");
 					String habitatN = scan.nextLine();
 					//pstModif.execute("UPDATE arboles SET habitat ='"+ habitatN+"' WHERE id='"+ idModificar+"'");
-					pstModif.setString(3,habitatN);
+					pstModif3.setString(1,habitatN);
+					pstModif3.setInt(2, idmod);
+					pstModif3.executeUpdate();
+					
+					PreparedStatement pstModif4 = con.prepareStatement("UPDATE arboles set altura=(?) WHERE id=?");
 					System.out.println("introduce altura");
 					int alturaN = Integer.parseInt(scan.nextLine());
 					//pstModif.execute("UPDATE arboles SET altura ='"+ alturaN+"' WHERE id='"+ idModificar+"'");
-					pstModif.setInt(4,alturaN);
+					pstModif4.setInt(1,alturaN);
+					pstModif4.setInt(2, idmod);
+					pstModif4.executeUpdate();
 					
+					PreparedStatement pstModif5 = con.prepareStatement("UPDATE arboles set origen=(?) WHERE id=?");
 					System.out.println("introduce origen nuevo");
 					String origenN = scan.nextLine();
 					//pst.execute("UPDATE arboles SET origen ='"+ origenN+"' WHERE id='"+ idModificar+"'");
-					pstModif.setString(5,origenN);
+					pstModif5.setString(1,origenN);
+					pstModif5.setInt(2, idmod);
+					pstModif5.executeUpdate();
 					
-					pstModif.execute();
+					//pstModif.executeUpdate();
 					
 					System.out.println("modificado ok!");
 					
