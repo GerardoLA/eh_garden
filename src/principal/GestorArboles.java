@@ -30,14 +30,14 @@ public class GestorArboles {
 			
 			PreparedStatement pstElim = con.prepareStatement("DELETE FROM arboles WHERE nombre_comun=?");
 			
-			PreparedStatement pstModif = con.prepareStatement("UPDATE arboles set (?,?,?,?,?) WHERE nombre_comun=nombrearbol");
-				
+			PreparedStatement pstModif = con.prepareStatement("UPDATE arboles set atributo=(?) WHERE nombre_comun=nombrearbol");
+				//"UPDATE arboles SET ID=10 WHERE ID=1"
 			final int INSERTAR_ARBOL = 1;
 			final int ELIMINAR_ARBOL = 2;
 			final int MODIFICAR = 3;
 			final int VISUALIZAR = 4;
 			final int SALIR = 0;
-
+//eneko petardo
 			int opcion_menu;
 
 			
@@ -60,6 +60,7 @@ public class GestorArboles {
 					System.out.println("introduce el nombre");
 					String nombreComun = scan.nextLine();	
 					pst.setString(1, nombreComun);
+					//para el ejercicio de arbol pst.setString(1, arbol1.getNombreComun());
 					
 					System.out.println("introduce el nombre cientifico");
 					String nombreCientifico = scan.nextLine();
@@ -98,7 +99,7 @@ public class GestorArboles {
 					
 					break;
 				case MODIFICAR:
-					System.out.println("Modicifanco arbol...");
+					System.out.println("Modicifando arbol...");
 					System.out.println("introduce el nombre del arbol a modificar :");
 					String nombrearbol = scan.nextLine();
 					pstModif.setString(1, nombrearbol);
