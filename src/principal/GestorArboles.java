@@ -26,21 +26,20 @@ public class GestorArboles {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/eh_garden", "root", "");
 
-			PreparedStatement pst = con.prepareStatement("INSERT INTO arboles VALUES (null,?,?,?,?,?)");
 			
-			PreparedStatement pstElim = con.prepareStatement("DELETE FROM arboles WHERE nombre_comun=?");
 			
-			;
+			
 				//"UPDATE arboles SET ID=10 WHERE ID=1"
 			final int INSERTAR_ARBOL = 1;
 			final int ELIMINAR_ARBOL = 2;
 			final int MODIFICAR = 3;
 			final int VISUALIZAR = 4;
 			final int SALIR = 0;
-//eneko petardo
+
 			int opcion_menu;
 
-			
+			PreparedStatement pst = con.prepareStatement("INSERT INTO arboles VALUES (null,?,?,?,?,?)");
+			Arbol arbol=new Arbol();
 			do {
 				System.out.println("------MENU-------");
 				System.out.println(INSERTAR_ARBOL + ".INSERTAR_ARBOL primera opcion");
@@ -57,31 +56,46 @@ public class GestorArboles {
 					
 					System.out.println("insertando arbol...");
 					
-					System.out.println("introduce el nombre");
-					String nombreComun = scan.nextLine();	
-					pst.setString(1, nombreComun);
+					
+					//String nombreComun = scan.nextLine();
+					
 					//para el ejercicio de arbol pst.setString(1, arbol1.getNombreComun());
+					System.out.println("introduce el nombre");
+					arbol.setNombreComun(scan.nextLine());
+					pst.setString(1, arbol.getNombreComun());
+					
+					
+					//String nombreCientifico = scan.nextLine();
 					
 					System.out.println("introduce el nombre cientifico");
-					String nombreCientifico = scan.nextLine();
-					pst.setString(2, nombreCientifico);
+					arbol.setNombrecientifico(scan.nextLine());
+					pst.setString(2, arbol.getNombrecientifico());
+				
 					
+					//String habitat = scan.nextLine();
 				
 					System.out.println("introduce el habitat");
-					String habitat = scan.nextLine();
-					pst.setString(3, habitat);
+					arbol.setHabitat(scan.nextLine());
+					pst.setString(3, arbol.getHabitat());
 				
+					
+					// int altura = Integer.parseInt(scan.nextLine());
+					 
 					System.out.println("introduce la altura, numero entero");
-					 int altura = Integer.parseInt(scan.nextLine());
-					 pst.setInt(4,altura);
+					arbol.setAltura(Integer.parseInt(scan.nextLine()));
+					pst.setInt(4,arbol.getAltura());
+					
+					
 					 
 					
 					System.out.println("introduce el origen");
-					String origen = scan.nextLine();
-					pst.setString(5, origen);
+					arbol.setOrigen(scan.nextLine());
+					pst.setString(5, arbol.getOrigen());
+					//String origen = scan.nextLine();
 					
 					
-					pst.executeUpdate();
+					
+					pst.execute();
 					//pst.execute("INSERT INTO arboles (nombre_comun, nombre_cientifico, habitat, altura, origen) "
 						//	+ "VALUES("+nombreComun+","+" "+nombreCientifico+","+""+habitat+","+" "+altura+","+" "+origen+")");
 					
@@ -90,12 +104,14 @@ public class GestorArboles {
 					
 					break; 
 				case ELIMINAR_ARBOL:
+					PreparedStatement pstElim = con.prepareStatement("DELETE FROM arboles WHERE id=?");
 					System.out.println("Eliminando un arbol...");
-					System.out.println("Introduce el nombre del arbol a eliminar");
-					String nombreEliminar= scan.nextLine();
-					pstElim.setString(1, nombreEliminar);
-					pstElim.executeUpdate();
-					System.out.println(nombreEliminar + "eliminado");
+					System.out.println("Introduce la id del arbol a eliminar");
+					arbol.setId(Integer.parseInt(scan.nextLine()));
+					pstElim.setInt(1, arbol.getId());
+					
+					pstElim.execute();
+					System.out.println(  "eliminado");
 					
 					break;
 				case MODIFICAR:
