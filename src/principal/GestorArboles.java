@@ -120,7 +120,7 @@ public class GestorArboles {
 					int idmod = Integer.parseInt(scan.nextLine());
 					
 					
-					PreparedStatement pstModif = con.prepareStatement("UPDATE arboles set nombre_comun=(?) WHERE id=?");
+					PreparedStatement pstModif = con.prepareStatement("UPDATE arboles set nombre_comun=?,mombre_cientifico=?,habitat=?,altura=?,origen=? WHERE id=?");
 					System.out.println("introduce nombre nuevo");
 					String nombreN = scan.nextLine();
 					
