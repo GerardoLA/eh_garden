@@ -68,7 +68,7 @@ public class GestorArboles {
 					break;
 					
 				case SALIR:
-					System.out.println("ADIOS");
+					System.out.println("ADIOS, AGUR, AU REVOIRE, ADEU, CIAO, BYE...AIOOOO!!");
 					break;
 					
 				default:
